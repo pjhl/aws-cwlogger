@@ -4,3 +4,6 @@ node_js:
   - "8"
   - "7"
   - "6"
+
+before_script:
+  - openssl aes-256-cbc -d -a -k $CONFIG_AES_SECRET -in config.js.enc -out test/config/config.js
