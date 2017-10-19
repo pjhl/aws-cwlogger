@@ -2,7 +2,7 @@
   "name": "aws-cwlogger",
   "version": "1.0.0",
   "description": "AWS CloudWatch Logger - log events in amazon log stream",
-  "main": "libs/CWLogger.js",
+  "main": "libs/index.js",
   "scripts": {
     "test": "mocha"
   },
@@ -14,9 +14,13 @@
     "aws"
   ],
   "author": "Pjhl Coder <pjhl.coder@gmail.com>",
+  "repository": "pjhl/aws-cwlogger",
   "license": "MIT",
   "devDependencies": {
     "assert": "^1.4.1",
     "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.135.0"
   }
 }

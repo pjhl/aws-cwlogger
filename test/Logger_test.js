@@ -13,12 +13,11 @@ describe('Logger', function () {
         assert.strictEqual(typeof reject, 'function');
         assert.deepStrictEqual(messages, [
           '{"level":"log","msg":"qwerty"}',
-          '{"level":"debug","msg":"qwerty"}',
           '{"level":"info","msg":"qwerty"}',
           '{"level":"warn","msg":"qwerty"}',
           '{"level":"error","msg":"qwerty"}',
         ]);
-        assert.strictEqual(logger.count, 5);
+        assert.strictEqual(logger.count, 4);
         resolve();
         assert.strictEqual(logger.count, 0);
         logger.destroy();
@@ -27,14 +26,12 @@ describe('Logger', function () {
       // All log methods
       logger.log('qwerty');
       assert.strictEqual(logger.count, 1);
-      logger.debug('qwerty');
-      assert.strictEqual(logger.count, 2);
       logger.info('qwerty');
-      assert.strictEqual(logger.count, 3);
+      assert.strictEqual(logger.count, 2);
       logger.warn('qwerty');
-      assert.strictEqual(logger.count, 4);
+      assert.strictEqual(logger.count, 3);
       logger.error('qwerty');
-      assert.strictEqual(logger.count, 5);
+      assert.strictEqual(logger.count, 4);
     });
 
     it('should support categories', function (done) {
@@ -45,12 +42,11 @@ describe('Logger', function () {
         assert.strictEqual(typeof reject, 'function');
         assert.deepStrictEqual(messages, [
           '{"level":"log","cat":"test","msg":"qwerty"}',
-          '{"level":"debug","cat":"test","msg":"qwerty"}',
           '{"level":"info","cat":"test","msg":"qwerty"}',
           '{"level":"warn","cat":"test","msg":"qwerty"}',
           '{"level":"error","cat":"test","msg":"qwerty"}',
         ]);
-        assert.strictEqual(logger.count, 5);
+        assert.strictEqual(logger.count, 4);
         resolve();
         assert.strictEqual(logger.count, 0);
         logger.destroy();
@@ -59,14 +55,12 @@ describe('Logger', function () {
       // All log methods
       logger.cat('test').log('qwerty');
       assert.strictEqual(logger.count, 1);
-      logger.cat('test').debug('qwerty');
-      assert.strictEqual(logger.count, 2);
       logger.cat('test').info('qwerty');
-      assert.strictEqual(logger.count, 3);
+      assert.strictEqual(logger.count, 2);
       logger.cat('test').warn('qwerty');
-      assert.strictEqual(logger.count, 4);
+      assert.strictEqual(logger.count, 3);
       logger.cat('test').error('qwerty');
-      assert.strictEqual(logger.count, 5);
+      assert.strictEqual(logger.count, 4);
     });
   });
 

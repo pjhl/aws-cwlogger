@@ -1,15 +1,17 @@
 const util = require('util');
+const EventEmitter = require('events');
 
 const OPTIONS = Symbol();
 const QUEUE = Symbol();
 
-class Logger {
+class Logger extends EventEmitter {
 
   /**
    * Create Logger
    * @param {object} options    Options
    */
   constructor(options = {}) {
+    super();
     const {consolePrint = true, flushDelay = 1000, maxBatchCount = 5000, maxBatchSize = 1000000} = options;
     // Options
     this[OPTIONS] = {
@@ -79,10 +81,6 @@ class Logger {
     return this._log('log', ...args);
   }
 
-  debug(...args) {
-    return this._log('debug', ...args);
-  }
-
   info(...args) {
     return this._log('info', ...args);
   }
@@ -105,9 +103,6 @@ class Logger {
     return {
       log(...args) {
         return $this.log({$category: name, $messages: args});
-      },
-      debug(...args) {
-        return $this.debug({$category: name, $messages: args});
       },
       info(...args) {
         return $this.info({$category: name, $messages: args});
@@ -195,6 +190,7 @@ class Logger {
    * @param {function} reject   Reject sending (it will be repeated after a while)
    */
   onSend(messages, resolve, reject) {
+    this.destroy();
     throw new Error('Function "onSend" must be overridden.');
   }
 

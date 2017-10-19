@@ -18,3 +18,6 @@ Thumbs.db
 .DS_Store
 
 /npm-debug.log
+
+# Local test configuration
+/test/config/config.js
