@@ -1,8 +1,76 @@
-AWS CloudWatch LOGGER
+AWS CloudWatch LOGGER [![Build Status](https://travis-ci.org/pjhl/aws-cwlogger.svg?branch=master)](https://travis-ci.org/pjhl/aws-cwlogger)
 ---------------------
 
-[![Build Status](https://travis-ci.org/pjhl/aws-cwlogger.svg?branch=master)](https://travis-ci.org/pjhl/aws-cwlogger)
+This is simple logger to send logs into
+[AWS CloudWatch Logs](http://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/WhatIsCloudWatchLogs.html) stream.
 
+### Usage:
+
+```javascript
+const CWLogger = require('./libs/index');
+const logger = new CWLogger({
+  // AWS access
+  accessKeyId: "XXXXXXXXXXXXXXXXXXXX",
+  secretAccessKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  region: "eu-central-1",
+  // Logs destination
+  groupName: "test_group",
+  streamName: "test_stream"
+});
+
+logger.log('Text message');
+logger.info({text: 'Supported all data types!'});
+logger.warn(['Including'], {_: 'multiple arguments'});
+logger.error(false);
+
+logger.cat('category-name').log('Categories supported.');
+logger.cat('category-name').info('with');
+logger.cat('category-name').warn('all 4');
+logger.cat('category-name').error('methods');
+```
+
+After that you should see in console:
+
+```text
+Text message
+{ text: 'Supported all data types!' }
+[ 'Including' ] { _: 'multiple arguments' }
+false
+<<category-name>>: Categories supported.
+<<category-name>>: with
+<<category-name>>: all 4
+<<category-name>>: methods
+```
+
+And in **AWS console - CloudWatch - Logs**:
+
+![AWS CloudWatch logs screen](/docs/screen-aws-cloudwatch-logs.png)
+
+### Options:
+
+| Param             | Type          | Description |
+|-------------------|---------------|-------------|
+| accessKeyId*      | {string}      | AWS API kye |
+| secretAccessKey*  | {string}      | AWS API secret |
+| region*           | {string}      | AWS region (default: `eu-central-1`) |
+| groupName*        | {string}      | CloudWatch log group name |
+| streamName*       | {string}      | CloudWatch log stream name in group |
+| consolePrint      | {boolean}     | Print errors into console (default: `true`) |
+| flushDelay        | {number}      | Delay in ms. between sending messages (default: `1000`) |
+| maxBatchCount     | {number}      | Max messages to send in butch (default: 5000) |
+| maxBatchSize      | {number}      | The maximum batch size (default: 1000000) |
+
+    P.S. IAM user should have permissions for actions
+    `["logs:DescribeLogGroups","logs:DescribeLogStreams","logs:PutLogEvents"]`
+    P.P.S. Do not use root user for the security reasons!
+
+
+INSTALL
+-------
+
+```bash
+npm install aws-cwlogger --save
+```
 
 
 RUN TESTS
@@ -57,3 +125,8 @@ nano test/config/config.js
 npm install
 npm test
 ```
+
+LICENSE
+-------
+
+MIT
