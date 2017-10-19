@@ -82,7 +82,7 @@ class CloudWatchLogs {
 
   /**
    * Put log events on AWS CloudWatch logs
-   * @param {[]} messages   List of messages: {message: {string}, timestamp: {integer}} (see new Date().getTime())
+   * @param {[]} messages   List of messages: {message: {string}, timestamp: {number}} (see new Date().getTime())
    * @return {Promise}
    */
   put(messages) {

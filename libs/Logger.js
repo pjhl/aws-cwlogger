@@ -39,7 +39,7 @@ class Logger extends EventEmitter {
        */
       maxBatchSize: maxBatchSize
     };
-    // Queue of messages
+    // Queue of messages: {message: {string}, timestamp: {number}}
     this[QUEUE] = [];
 
     // Start timer to send log events periodically
@@ -70,11 +70,14 @@ class Logger extends EventEmitter {
       }
     }
     // Add to queue
-    this[QUEUE].push(JSON.stringify({
-      level: level,
-      cat: cat,
-      msg: msg
-    }));
+    this[QUEUE].push({
+      message: JSON.stringify({
+        level: level,
+        cat: cat,
+        msg: msg
+      }),
+      timestamp: new Date().getTime()
+    });
   }
 
   log(...args) {
@@ -139,7 +142,7 @@ class Logger extends EventEmitter {
       // Search messages
       let batchSize = 0, posEnd = 0;
       for (let i = 0; i < this[QUEUE].length; i++) {
-        const msg = this[QUEUE][i];
+        const msg = this[QUEUE][i].message;
         // Current message size (+ 26 bytes overhead)
         const currentMessageSize = msg.length + 26;
         // Check limit "maxBatchSize"
@@ -185,7 +188,7 @@ class Logger extends EventEmitter {
 
   /**
    * Send batch event
-   * @param {[]} messages       List of messages to send
+   * @param {[]} messages       List of messages to send: {message: {string}, timestamp: {number}}
    * @param {function} resolve  Approve sending
    * @param {function} reject   Reject sending (it will be repeated after a while)
    */

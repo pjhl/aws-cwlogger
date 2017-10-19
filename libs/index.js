@@ -12,12 +12,9 @@ class CWLogger extends Logger {
    * @inheritDoc
    */
   onSend(messages, resolve, reject) {
-    // TODO: change format, remove temp code below
-    const messages2 = messages.map(val => ({message: val, timestamp: new Date().getTime()}));
-
     // Adapter for AWS CloudWatch Logs
     this._cwlogs
-      .put(messages2)
+      .put(messages)
       .then(() => {
         resolve();
         this.emit('success', messages);
