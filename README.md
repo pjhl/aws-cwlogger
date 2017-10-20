@@ -7,7 +7,7 @@ This is simple logger to send logs into
 ### Usage:
 
 ```javascript
-const CWLogger = require('./libs/index');
+const CWLogger = require('aws-cwlogger');
 const logger = new CWLogger({
   // AWS access
   accessKeyId: "XXXXXXXXXXXXXXXXXXXX",
@@ -50,7 +50,7 @@ And in **AWS console - CloudWatch - Logs**:
 
 | Param             | Type          | Description |
 |-------------------|---------------|-------------|
-| accessKeyId*      | {string}      | AWS API kye |
+| accessKeyId*      | {string}      | AWS API key |
 | secretAccessKey*  | {string}      | AWS API secret |
 | region*           | {string}      | AWS region (default: `eu-central-1`) |
 | groupName*        | {string}      | CloudWatch log group name |
@@ -61,7 +61,7 @@ And in **AWS console - CloudWatch - Logs**:
 | maxBatchSize      | {number}      | The maximum batch size (default: 1000000) |
 
     P.S. IAM user should have permissions for actions
-    `["logs:DescribeLogGroups","logs:DescribeLogStreams","logs:PutLogEvents"]`
+    ["logs:DescribeLogGroups","logs:DescribeLogStreams","logs:PutLogEvents"]
     P.P.S. Do not use root user for the security reasons!
 
 
