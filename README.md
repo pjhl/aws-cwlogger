@@ -51,11 +51,11 @@ And in **AWS console - CloudWatch - Logs**:
 | Param             | Type          | Description |
 |-------------------|---------------|-------------|
 | enabled           | {boolean}     | Enable sending logs to CloudWatch (default: `true`). Leave the option `false` to don't save logs into CloudWatch Logs |
-| accessKeyId*      | {string}      | AWS API key |
-| secretAccessKey*  | {string}      | AWS API secret |
-| region*           | {string}      | AWS region (default: `eu-central-1`) |
-| groupName*        | {string}      | CloudWatch log group name |
-| streamName*       | {string}      | CloudWatch log stream name in group |
+| accessKeyId*      | {string}      | AWS API key (not required if `enabled === false`) |
+| secretAccessKey*  | {string}      | AWS API secret (not required if `enabled === false`) |
+| region*           | {string}      | AWS region (default: `eu-central-1`) (not required if `enabled === false`) |
+| groupName*        | {string}      | CloudWatch log group name (not required if `enabled === false`) |
+| streamName*       | {string}      | CloudWatch log stream name in group (not required if `enabled === false`) |
 | consolePrint      | {boolean}     | Print errors into console (default: `true`) |
 | flushDelay        | {number}      | Delay in ms. between sending messages (default: `1000`) |
 | maxBatchCount     | {number}      | Max messages to send in butch (default: 5000) |
