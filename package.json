@@ -1,6 +1,6 @@
 {
   "name": "aws-cwlogger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AWS CloudWatch Logger - log events in amazon log stream",
   "main": "libs/index.js",
   "scripts": {

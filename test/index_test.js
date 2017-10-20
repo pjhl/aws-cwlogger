@@ -33,4 +33,15 @@ describe("CWLogger", function () {
     });
   });
 
+  it('should not send to CloudWatch', function () {
+    const logger = new CWLogger({
+      enabled: false, // We test this option
+      consolePrint: true
+    });
+
+    logger.log('Test message');
+    assert.strictEqual(logger.count, 0, 'The messages aren\'t saving');
+    logger.destroy();
+  });
+
 });

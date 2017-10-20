@@ -12,9 +12,14 @@ class Logger extends EventEmitter {
    */
   constructor(options = {}) {
     super();
-    const {consolePrint = true, flushDelay = 1000, maxBatchCount = 5000, maxBatchSize = 1000000} = options;
+    const {enabled = true, consolePrint = true, flushDelay = 1000, maxBatchCount = 5000, maxBatchSize = 1000000} = options;
     // Options
     this[OPTIONS] = {
+      /**
+       * Enable saving logs to queue (default: true)
+       * @type {boolean}
+       */
+      enabled: enabled,
       /**
        * Print errors into console (default: true)
        * @type {boolean}
@@ -69,15 +74,17 @@ class Logger extends EventEmitter {
         console[level](...args);
       }
     }
-    // Add to queue
-    this[QUEUE].push({
-      message: JSON.stringify({
-        level: level,
-        cat: cat,
-        msg: msg
-      }),
-      timestamp: new Date().getTime()
-    });
+    if (this[OPTIONS].enabled) {
+      // Add to queue
+      this[QUEUE].push({
+        message: JSON.stringify({
+          level: level,
+          cat: cat,
+          msg: msg
+        }),
+        timestamp: new Date().getTime()
+      });
+    }
   }
 
   log(...args) {

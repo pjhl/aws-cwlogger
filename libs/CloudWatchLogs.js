@@ -29,30 +29,42 @@ const AWS = require('aws-sdk');
 class CloudWatchLogs {
 
   constructor(options) {
-    const {accessKeyId = null, secretAccessKey = null, region = 'eu-central-1', groupName = '', streamName = ''}
-      = options;
-    if (!accessKeyId) {
-      throw new Error('CloudWatchLogs constructor: option "accessKeyId" is required.');
-    }
-    if (!secretAccessKey) {
-      throw new Error('CloudWatchLogs constructor: option "secretAccessKey" is required.');
-    }
-    if (!groupName) {
-      throw new Error('CloudWatchLogs constructor: option "groupName" is required.');
-    }
-    if (!streamName) {
-      throw new Error('CloudWatchLogs constructor: option "groupName" is required.');
-    }
+    const {
+      enabled = true,
+      accessKeyId = null,
+      secretAccessKey = null,
+      region = 'eu-central-1',
+      groupName = '',
+      streamName = ''
+    } = options;
+
+    this.enabled = enabled;
     this.sequenceToken = null;
     this.groupName = groupName;
     this.streamName = streamName;
-    // Create Amazon api object
-    this._awsCWL = new AWS.CloudWatchLogs({
-      apiVersion: '2014-03-28',
-      accessKeyId: accessKeyId,
-      secretAccessKey: secretAccessKey,
-      region: region
-    });
+
+    if (this.enabled) {
+      if (!accessKeyId) {
+        throw new Error('CloudWatchLogs constructor: option "accessKeyId" is required.');
+      }
+      if (!secretAccessKey) {
+        throw new Error('CloudWatchLogs constructor: option "secretAccessKey" is required.');
+      }
+      if (!groupName) {
+        throw new Error('CloudWatchLogs constructor: option "groupName" is required.');
+      }
+      if (!streamName) {
+        throw new Error('CloudWatchLogs constructor: option "groupName" is required.');
+      }
+
+      // Create Amazon api object
+      this._awsCWL = new AWS.CloudWatchLogs({
+        apiVersion: '2014-03-28',
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey,
+        region: region
+      });
+    }
   }
 
   /**
@@ -86,6 +98,9 @@ class CloudWatchLogs {
    * @return {Promise}
    */
   put(messages) {
+    if (!this.enabled) {
+      return new Promise((resolve, reject) => reject('CloudWatch option "enabled": false'));
+    }
     if (!this.sequenceToken) {
       // Get token then put
       return this

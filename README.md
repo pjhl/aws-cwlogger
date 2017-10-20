@@ -50,6 +50,7 @@ And in **AWS console - CloudWatch - Logs**:
 
 | Param             | Type          | Description |
 |-------------------|---------------|-------------|
+| enabled           | {boolean}     | Enable sending logs to CloudWatch (default: `true`). Leave the option `false` to don't save logs into CloudWatch Logs |
 | accessKeyId*      | {string}      | AWS API key |
 | secretAccessKey*  | {string}      | AWS API secret |
 | region*           | {string}      | AWS region (default: `eu-central-1`) |
